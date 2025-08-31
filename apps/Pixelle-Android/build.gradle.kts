@@ -1,1 +1,0 @@
-// Top-level build file (placeholder)\nplugins { kotlin("jvm") version "1.9.0" apply false }\nallprojects { repositories { mavenCentral() } }\n

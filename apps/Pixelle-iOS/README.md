@@ -1,1 +1,0 @@
-# Pixelle-iOS\n\nGenerated SwiftUI scaffold for Pixelle. Open the Sources folder as a Swift package in Xcode or import into an Xcode project.

@@ -1,1 +1,0 @@
-rootProject.name = "Pixelle-Android"\ninclude(":app", ":features:feed", ":features:chat", ":core:network", ":core:model")\n

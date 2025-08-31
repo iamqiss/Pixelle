@@ -1,1 +1,0 @@
-package com.pixelle.feature.feed\n\nclass FeedRepository { suspend fun loadFeed() = emptyList<Any>() }\n

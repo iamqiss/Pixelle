@@ -1,1 +1,0 @@
-# Formatting and linting\nPlace scripts to run swiftformat, swiftlint, ktlint, detekt, etc.\n

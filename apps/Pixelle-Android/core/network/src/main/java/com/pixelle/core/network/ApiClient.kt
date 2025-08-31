@@ -1,1 +1,0 @@
-package com.pixelle.core.network\n\nobject ApiClient { suspend fun <T> fetch(path: String): Result<T> = Result.failure(Exception("not implemented")) }\n

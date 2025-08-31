@@ -1,1 +1,0 @@
-import XCTest\n@testable import PixelleApp\n\nfinal class PixelleTests: XCTestCase { func testUser() { let u = User(id: "1", name: "A", username: "a", email: nil, avatarURL: nil); XCTAssertEqual(u.username, "a") } }\n

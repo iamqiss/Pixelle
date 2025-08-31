@@ -1,1 +1,0 @@
-import SwiftUI\n\n@main\nstruct PixelleApp: App {\n  @StateObject private var session = SessionStore()\n  var body: some Scene {\n    WindowGroup {\n      MainTabView().environmentObject(session)\n    }\n  }\n}\n
