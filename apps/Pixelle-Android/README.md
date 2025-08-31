@@ -1,0 +1,1 @@
+# Pixelle-Android\n\nGenerated Android skeleton with Compose and a large module layout. Open in Android Studio to convert to a real Gradle project.

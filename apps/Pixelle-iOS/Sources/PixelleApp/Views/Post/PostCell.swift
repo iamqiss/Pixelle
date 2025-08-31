@@ -1,0 +1,1 @@
+import SwiftUI\n\npublic struct PostCell: View { public var post: Post; public init(post: Post) { self.post = post } public var body: some View { VStack(alignment: .leading) { Text(post.author.name).bold(); Text(post.content) } } }\n

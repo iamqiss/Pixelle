@@ -1,0 +1,1 @@
+import Foundation\n\npublic enum APIError: Error { case network, decoding, unknown }\n\npublic final class APIClient {\n  public static let shared = APIClient()\n  private init() {}\n  public func fetchFeed(completion: @escaping (Result<[Post], APIError>) -> Void) {\n    DispatchQueue.global().asyncAfter(deadline: .now() + 0.8) { completion(.success([])) }\n  }\n}\n

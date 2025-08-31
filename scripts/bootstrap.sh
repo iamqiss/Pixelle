@@ -1,0 +1,1 @@
+#!/usr/bin/env bash\nset -euo pipefail\necho "Bootstrapping repo - no-op placeholder"\n

@@ -1,0 +1,1 @@
+package com.pixelle.core.model\n\nimport java.util.UUID\n\ndata class User(val id: UUID = UUID.randomUUID(), val name: String, val username: String)\n

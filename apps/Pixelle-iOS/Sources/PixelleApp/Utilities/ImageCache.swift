@@ -1,0 +1,1 @@
+import UIKit\n\npublic final class ImageCache {\n  public static let shared = ImageCache()\n  private var cache = NSCache<NSString, UIImage>()\n  private init() {}\n  public func image(for key: String) -> UIImage? { cache.object(forKey: key as NSString) }\n  public func insert(_ image: UIImage, for key: String) { cache.setObject(image, forKey: key as NSString) }\n}\n

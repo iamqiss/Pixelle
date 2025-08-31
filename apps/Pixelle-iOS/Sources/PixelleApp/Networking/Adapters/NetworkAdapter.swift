@@ -1,0 +1,1 @@
+import Foundation\n\npublic protocol NetworkAdapter { func request(path: String, completion: @escaping (Result<Data, Error>) -> Void) }\n\npublic final class URLSessionAdapter: NetworkAdapter { public init() {} public func request(path: String, completion: @escaping (Result<Data, Error>) -> Void) { completion(.failure(NSError(domain: "not", code: -1))) } }\n
